@@ -33,12 +33,6 @@ ExamEdge/
     ├── main.py          # FastAPI app entry point
     ├── .env.example     # Environment variable template
     ├── requirements.txt
-    ├── app/
-    │   ├── api/
-    │   │   └── auth_routes.py    # POST /auth/register, POST /auth/login
-    │   ├── db/database.py        # Supabase client
-    │   ├── schemas/user.py       # Pydantic models
-    │   └── services/auth_service.py
     ├── appapi/
     │   └── routes.py             # POST /analyse, GET /health
     └── appservices/
@@ -129,8 +123,6 @@ Then visit `http://localhost:3000`.
 |---|---|---|
 | GET | `/health` | Health check |
 | POST | `/analyse` | Run Gemini analysis on uploaded content |
-| POST | `/auth/register` | Register a new user |
-| POST | `/auth/login` | Log in an existing user |
 
 ### POST /analyse
 
