@@ -17,3 +17,13 @@ async def upload_exam(file: UploadFile = File(...)):
         "filename": file.filename,
         "analysis": analysis
     }
+
+@router.post("/upload-syllabus")
+async def upload_syllabus(file: UploadFile = File(...)):
+    contents = await file.read()
+    text = extract_text_from_pdf(contents)
+    analysis = analyze_exam(text)
+    return {
+        "filename": file.filename,
+        "analysis": analysis
+    }
