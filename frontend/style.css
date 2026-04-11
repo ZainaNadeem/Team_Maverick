@@ -1,0 +1,283 @@
+/* ExamEdge — complete stylesheet
+   This file contains all styling for the application:
+   - Design tokens (colors, spacing, typography)
+   - Layout (nav, hero, sections)
+   - Components (cards, forms, buttons)
+   - Results UI and animations
+   - Responsive behavior
+*/
+
+/* Design tokens (global variables used across the app) */
+:root {
+  /* Primary brand colors (purple theme for Mode 1) */
+  --purple-50:  #f5f3ff;
+  --purple-100: #ede9fe;
+  --purple-200: #ddd6fe;
+  --purple-400: #a78bfa;
+  --purple-600: #7c3aed;
+  --purple-700: #6d28d9;
+  --purple-800: #5b21b6;
+  --purple-900: #4c1d95;
+
+  /* Secondary accent colors (blue theme for Mode 2) */
+  --sky-50:  #f0f9ff;
+  --sky-100: #e0f2fe;
+  --sky-200: #bae6fd;
+  --sky-400: #38bdf8;
+  --sky-600: #0284c7;
+  --sky-700: #0369a1;
+
+  /* Neutral colors used for text, backgrounds, borders */
+  --white:    #ffffff;
+  --gray-50:  #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-700: #374151;
+  --gray-900: #111827;
+
+  /* Semantic mapping (used throughout UI for consistency) */
+  --color-primary:       var(--purple-600);
+  --color-primary-hover: var(--purple-700);
+  --color-primary-dark:  var(--purple-800);
+  --color-bg:            var(--gray-50);
+  --color-surface:       var(--white);
+  --color-border:        var(--gray-200);
+  --color-text:          var(--gray-900);
+  --color-text-muted:    var(--gray-500);
+
+  /* Typography scale */
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --text-xs:   0.75rem;
+  --text-sm:   0.875rem;
+  --text-base: 1rem;
+  --text-lg:   1.125rem;
+  --text-xl:   1.25rem;
+  --text-2xl:  1.5rem;
+  --text-3xl:  1.875rem;
+
+  /* Spacing system (used for margins, padding, gaps) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  /* Border radius values for consistent rounded UI */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* Shadows for depth and elevation */
+  --shadow-sm: 0 1px 3px rgb(0 0 0 / 0.08);
+  --shadow-md: 0 4px 12px rgb(0 0 0 / 0.10);
+  --shadow-lg: 0 10px 30px rgb(0 0 0 / 0.14);
+}
+
+/* Reset styles to ensure consistency across browsers */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Base document styling */
+body {
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  background: var(--color-bg);
+  color: var(--color-text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Images and SVG should scale properly */
+img, svg {
+  max-width: 100%;
+  display: block;
+}
+
+/* Shared container used across sections */
+.section-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+
+/* Navigation bar (top header) */
+.nav {
+  background: var(--white);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-4) var(--space-6);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Logo styling */
+.nav__logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  text-decoration: none;
+}
+
+/* Logo icon */
+.nav__logo-mark {
+  width: 32px;
+  height: 32px;
+  background: var(--purple-600);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+}
+
+/* Brand text */
+.nav__brand span {
+  color: var(--purple-600);
+}
+
+/* Hero section (main landing area) */
+.hero {
+  background: linear-gradient(135deg, var(--purple-900), var(--purple-600));
+  color: white;
+  text-align: center;
+  padding: var(--space-24) var(--space-6);
+}
+
+/* Hero title */
+.hero__title {
+  font-size: 2.5rem;
+  font-weight: 800;
+}
+
+/* Hero subtitle text */
+.hero__subtitle {
+  margin-top: var(--space-4);
+  opacity: 0.9;
+}
+
+/* Mode selection grid */
+.mode-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-6);
+}
+
+/* Individual mode card */
+.mode-card {
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  cursor: pointer;
+}
+
+/* Active selected mode */
+.mode-card--active {
+  border-color: var(--purple-600);
+  background: var(--purple-50);
+}
+
+/* Upload area (drag and drop box) */
+.drop-zone {
+  border: 2px dashed var(--color-border);
+  padding: var(--space-10);
+  text-align: center;
+  background: var(--gray-50);
+  border-radius: var(--radius-lg);
+}
+
+/* Drag hover state */
+.drop-zone--over {
+  border-color: var(--purple-400);
+}
+
+/* Form inputs */
+.form-input,
+.form-select {
+  width: 100%;
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+/* Buttons */
+.btn {
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* Primary button */
+.btn--primary {
+  background: var(--purple-600);
+  color: white;
+}
+
+/* Results section container */
+.results {
+  padding: var(--space-16);
+}
+
+/* Tabs inside results */
+.results-tab {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+}
+
+/* Active tab */
+.results-tab--active {
+  border-color: var(--purple-600);
+}
+
+/* Tab content panels */
+.results-panel {
+  padding: var(--space-4);
+}
+
+/* Loading overlay */
+#loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+}
+
+/* Footer */
+.footer {
+  padding: var(--space-8);
+  text-align: center;
+  background: white;
+  border-top: 1px solid var(--color-border);
+}
+
+/* Responsive layout for small screens */
+@media (max-width: 600px) {
+  .mode-cards {
+    grid-template-columns: 1fr;
+  }
+}
