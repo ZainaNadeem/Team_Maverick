@@ -101,7 +101,7 @@ function selectMode(mode) {
   }
 }
 
-// File handling — drag & drop + native picker 
+// File handling — drag & drop + native picker (takes input files here) 
 // Supported types match what Gemini inline_data accepts for document analysis.
 
 const ACCEPTED_MIME  = ['application/pdf', 'image/png', 'image/jpeg', 'text/plain'];
