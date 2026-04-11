@@ -1,14 +1,13 @@
 'use strict';
 
 /* ExamEdge — application logic
-   Handles: mode selection, file upload, Gemini API calls,
+   Handles: auth guard, mode selection, file upload, Gemini API calls,
    plain-text parsing, result rendering, tab switching. */
 
-//  API configuration 
-// Replace 'YOUR_KEY_HERE' with a real Gemini API key before running.
+// ── API configuration ──────────────────────────────────────────────────────────
+// All AI calls go through the backend — the Gemini key never touches the browser.
 
-const API_KEY = 'YOUR_KEY_HERE';
-const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+const BACKEND_URL = 'http://localhost:8000';
 
 
 
@@ -157,8 +156,8 @@ function setDropZoneSuccess(mode, filename) {
   const hint   = zone.querySelector('.drop-zone__hint');
   if (prompt) prompt.innerHTML = `<strong>\u2713 ${escapeHtml(filename)}</strong> ready to upload`;
   if (hint)   { hint.textContent = 'Click the button below to continue.'; hint.style.color = ''; }
-  zone.style.borderColor = 'var(--purple-600)';
-  zone.style.background  = 'var(--purple-50)';
+  zone.style.borderColor = 'var(--violet-600)';
+  zone.style.background  = '#f5f3ff';
 }
 
 function setDropZoneError(mode, message) {
@@ -279,49 +278,40 @@ async function prepareFile(file) {
   };
 }
 
-// Gemini API call 
-// Sends the prompt and optional file part to gemini-1.5-flash.
-// Returns the raw text string from the first response candidate.
+// Backend proxy call
+// Sends the prompt (and optional base64 file) to the FastAPI backend, which
+// forwards it to Gemini. The API key never leaves the server.
 
 async function callGemini(promptText, extraPart) {
-  // Build the parts array: always include the text prompt; optionally append the file
-  const parts = [{ text: promptText }];
-  if (extraPart) parts.push(extraPart);
-
-  const body = {
-    contents: [{ parts }],
-    generationConfig: {
-      temperature:     0.7,
-      maxOutputTokens: 4096,
-      // No responseMimeType - we want plain text so the section headers parse reliably
-    },
-  };
+  const body = { prompt: promptText };
+  if (extraPart) {
+    body.file_base64 = extraPart.inline_data.data;
+    body.mime_type   = extraPart.inline_data.mime_type;
+  }
 
   let response;
   try {
-    response = await fetch(API_URL, {
+    response = await fetch(`${BACKEND_URL}/analyse`, {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
       body:    JSON.stringify(body),
     });
   } catch {
-    throw new Error('Network error — check your connection and try again.');
+    throw new Error('Cannot reach the server — make sure the backend is running on port 8000.');
   }
 
   if (!response.ok) {
-    let message = `Gemini API error (${response.status})`;
+    let message = `Server error (${response.status})`;
     try {
-      const errJson = await response.json();
-      message = errJson.error?.message ?? message;
-    } catch { /* swallow JSON parse failure; keep the status-based message */ }
+      const err = await response.json();
+      message = err.detail ?? message;
+    } catch { /* keep status message */ }
     throw new Error(message);
   }
 
   const json = await response.json();
-  const text = json.candidates?.[0]?.content?.parts?.[0]?.text;
-
-  if (!text) throw new Error('Empty response from Gemini — please try again.');
-  return text;
+  if (!json.result) throw new Error('Empty response from AI — please try again.');
+  return json.result;
 }
 
 // Plain-text section parser 
@@ -511,6 +501,12 @@ function showUploadError(mode, message) {
 function clearUploadError(mode) {
   uploadForms[mode]?.querySelector('.upload-error')?.remove();
 }
+
+// PDF download — opens the browser print dialog (Save as PDF)
+
+btnDownloadPdf?.addEventListener('click', () => {
+  window.print();
+});
 
 // XSS-safe HTML escaping 
 // Applied to ALL AI-generated text before it is inserted into the DOM.

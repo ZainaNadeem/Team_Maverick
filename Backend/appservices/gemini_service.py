@@ -1,36 +1,32 @@
 import os
+import base64
 from dotenv import load_dotenv
 from google import genai
+from google.genai import types
 
 load_dotenv()
 
 api_key = os.getenv("GEMINI_API_KEY")
-if not api_key:
-    raise ValueError("GEMINI_API_KEY not found")
+client = genai.Client(api_key=api_key) if api_key else None
 
-client = genai.Client(api_key=api_key)
 
-def analyze_exam(exam_text: str) -> dict:
-    try:
-        prompt = f"""
-        You are an expert exam analyzer. Analyze this exam and return:
+def run_prompt(prompt: str, file_base64: str = None, mime_type: str = None) -> str:
+    """Call Gemini with a text prompt and an optional inline file attachment."""
+    if not client:
+        raise ValueError("GEMINI_API_KEY is not set in the .env file.")
 
-        TOP 5 CONCEPTS:
-        - List the 5 most tested concepts
+    parts = [types.Part(text=prompt)]
 
-        PREDICTED QUESTIONS:
-        - Write 3 new questions likely to appear in the same style
+    if file_base64 and mime_type:
+        parts.append(types.Part(
+            inline_data=types.Blob(
+                mime_type=mime_type,
+                data=base64.b64decode(file_base64)
+            )
+        ))
 
-        CRAM SHEET:
-        - Write a one-page summary of the key points to study
-
-        Exam content:
-        {exam_text}
-        """
-        response = client.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=prompt
-        )
-        return {"analysis": response.text}
-    except Exception as e:
-        return {"error": str(e)}
+    response = client.models.generate_content(
+        model="gemini-2.5-flash",
+        contents=types.Content(parts=parts, role="user")
+    )
+    return response.text
