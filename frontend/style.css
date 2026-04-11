@@ -1,1 +1,263 @@
-/* ExamEdge — styles coming soon */
+/* ExamEdge styles
+   Purple theme, card-based layout, responsive and smooth interactions */
+
+/* Colors, spacing, fonts, shadows — reusable design values */
+:root {
+  /* Purple palette */
+  --purple-50:  #f5f3ff;
+  --purple-100: #ede9fe;
+  --purple-200: #ddd6fe;
+  --purple-400: #a78bfa;
+  --purple-600: #7c3aed;
+  --purple-700: #6d28d9;
+  --purple-800: #5b21b6;
+  --purple-900: #4c1d95;
+
+  /* Neutrals */
+  --white:      #ffffff;
+  --gray-50:    #f9fafb;
+  --gray-100:   #f3f4f6;
+  --gray-200:   #e5e7eb;
+  --gray-400:   #9ca3af;
+  --gray-500:   #6b7280;
+  --gray-700:   #374151;
+  --gray-900:   #111827;
+
+  /* Semantic colors */
+  --color-primary:        var(--purple-600);
+  --color-primary-hover:  var(--purple-700);
+  --color-primary-dark:   var(--purple-800);
+  --color-bg:             var(--gray-50);
+  --color-surface:        var(--white);
+  --color-border:         var(--gray-200);
+  --color-text:           var(--gray-900);
+  --color-text-muted:     var(--gray-500);
+
+  /* Typography */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+
+  --text-xs:   0.75rem;
+  --text-sm:   0.875rem;
+  --text-base: 1rem;
+  --text-lg:   1.125rem;
+  --text-xl:   1.25rem;
+  --text-2xl:  1.5rem;
+  --text-3xl:  1.875rem;
+  --text-4xl:  2.25rem;
+
+  /* Spacing scale */
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-5:  1.25rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  /* Border radius */
+  --radius-sm:  0.375rem;
+  --radius-md:  0.625rem;
+  --radius-lg:  1rem;
+  --radius-xl:  1.5rem;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm:  0 1px 3px rgb(0 0 0 / 0.08);
+  --shadow-md:  0 4px 12px rgb(0 0 0 / 0.10);
+  --shadow-lg:  0 10px 30px rgb(0 0 0 / 0.14);
+  --shadow-purple: 0 4px 14px rgb(124 58 237 / 0.35);
+
+  /* Animations */
+  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+}
+
+/* Basic reset so layout behaves consistently everywhere */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+input, button, select, textarea {
+  font: inherit;
+}
+
+/* Shared container used across sections */
+.section-inner {
+  width: 100%;
+  max-width: 720px;
+  margin-inline: auto;
+  padding-inline: var(--space-6);
+}
+
+/* Top navigation bar */
+.nav {
+  background: var(--white);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1100px;
+  margin-inline: auto;
+  padding: var(--space-4) var(--space-6);
+}
+
+.nav__logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  text-decoration: none;
+}
+
+.nav__logo-mark {
+  width: 2rem;
+  height: 2rem;
+  background: linear-gradient(135deg, var(--purple-600), var(--purple-800));
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+}
+
+/* Hero section at top of landing page */
+.hero {
+  background: linear-gradient(160deg, var(--purple-900), var(--purple-600));
+  color: white;
+  padding: var(--space-24) var(--space-6) var(--space-20);
+  text-align: center;
+  position: relative;
+}
+
+/* Mode selection cards (main feature choice UI) */
+.mode-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-6);
+}
+
+/* Individual mode card */
+.mode-card {
+  background: white;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+.mode-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--purple-400);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Upload section for files */
+.upload-panel {
+  padding: var(--space-12) var(--space-6);
+}
+
+.drop-zone {
+  border: 2px dashed var(--color-border);
+  padding: var(--space-12);
+  text-align: center;
+  background: var(--gray-50);
+  border-radius: var(--radius-lg);
+}
+
+/* Buttons (primary / secondary / ghost) */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+/* Primary CTA button */
+.btn--primary {
+  background: linear-gradient(135deg, var(--purple-600), var(--purple-700));
+  color: white;
+}
+
+/* Secondary button */
+.btn--secondary {
+  background: var(--purple-100);
+  color: var(--purple-700);
+}
+
+/* Results section (after upload processing) */
+.results {
+  padding: var(--space-12) var(--space-6);
+  background: white;
+}
+
+/* Tabs inside results section */
+.results-tabs {
+  display: flex;
+  gap: var(--space-2);
+  border-bottom: 2px solid var(--color-border);
+}
+
+/* Footer at bottom of page */
+.footer {
+  margin-top: auto;
+  padding: var(--space-8);
+  background: white;
+  border-top: 1px solid var(--color-border);
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 480px) {
+  .mode-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
+
+/* Accessibility: reduce motion support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
