@@ -23,7 +23,7 @@ Upload lecture notes or a syllabus. ExamEdge generates 10 exam-style questions o
 
 
 ## Project structure
-
+```
 ExamEdge/
 ├── frontend/
 │   ├── index.html       # Main app page
