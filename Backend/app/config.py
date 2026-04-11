@@ -1,0 +1,4 @@
+import os
+
+SUPABASE_URL = "https://lmvdbylajtpayumiwszu.supabase.co"
+SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxtdmRieWxhanRwYXl1bWl3c3p1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU4NTc4NzEsImV4cCI6MjA5MTQzMzg3MX0.vZ5TJl4qUwgpF2KiVUeBEGlHMvUcFoSBwBIhnQ-1dt0"
