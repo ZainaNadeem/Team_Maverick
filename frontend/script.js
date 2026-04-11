@@ -366,7 +366,7 @@ function renderResults(mode, data, subject, examType) {
     tabFullex.removeAttribute('hidden');
   }
 
-  activateTab('tab-questions');
+  activateTab('tab-cramsheet');
   resultsSection.removeAttribute('hidden');
   btnDownloadPdf.disabled = false;
 
@@ -484,7 +484,7 @@ btnStartOver?.addEventListener('click', () => {
   btnDownloadPdf.disabled = true;
 
   panelQuestions.innerHTML = '<p class="results-placeholder">Practice questions will appear here.</p>';
-  panelCramsheet.innerHTML = '<p class="results-placeholder">Your cram sheet will appear here.</p>';
+  panelCramsheet.innerHTML = '<p class="results-placeholder">Key concepts will appear here.</p>';
   panelFullex.innerHTML    = '<p class="results-placeholder">Your generated practice exam will appear here.</p>';
 
   activateTab('tab-questions');
