@@ -1,7 +1,6 @@
-/* ExamEdge styles
-   Purple theme, card-based layout, responsive and smooth interactions */
+/* ExamEdge styling — purple themed UI with responsive layout */
 
-/* Colors, spacing, fonts, shadows — reusable design values */
+/* Design tokens: reusable colors, spacing, typography, shadows */
 :root {
   /* Purple palette */
   --purple-50:  #f5f3ff;
@@ -13,7 +12,7 @@
   --purple-800: #5b21b6;
   --purple-900: #4c1d95;
 
-  /* Neutrals */
+  /* Neutral colors */
   --white:      #ffffff;
   --gray-50:    #f9fafb;
   --gray-100:   #f3f4f6;
@@ -23,7 +22,7 @@
   --gray-700:   #374151;
   --gray-900:   #111827;
 
-  /* Semantic colors */
+  /* Theme colors */
   --color-primary:        var(--purple-600);
   --color-primary-hover:  var(--purple-700);
   --color-primary-dark:   var(--purple-800);
@@ -33,7 +32,7 @@
   --color-text:           var(--gray-900);
   --color-text-muted:     var(--gray-500);
 
-  /* Typography */
+  /* Typography scale */
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
 
   --text-xs:   0.75rem;
@@ -45,7 +44,7 @@
   --text-3xl:  1.875rem;
   --text-4xl:  2.25rem;
 
-  /* Spacing scale */
+  /* Spacing system */
   --space-1:  0.25rem;
   --space-2:  0.5rem;
   --space-3:  0.75rem;
@@ -72,13 +71,13 @@
   --shadow-lg:  0 10px 30px rgb(0 0 0 / 0.14);
   --shadow-purple: 0 4px 14px rgb(124 58 237 / 0.35);
 
-  /* Animations */
+  /* Animation timing */
   --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
   --duration-fast: 150ms;
   --duration-normal: 250ms;
 }
 
-/* Basic reset so layout behaves consistently everywhere */
+/* Reset default browser spacing for consistency */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -109,7 +108,7 @@ input, button, select, textarea {
   font: inherit;
 }
 
-/* Shared container used across sections */
+/* Container used to keep sections centered */
 .section-inner {
   width: 100%;
   max-width: 720px;
@@ -117,7 +116,7 @@ input, button, select, textarea {
   padding-inline: var(--space-6);
 }
 
-/* Top navigation bar */
+/* Navigation bar */
 .nav {
   background: var(--white);
   border-bottom: 1px solid var(--color-border);
@@ -154,7 +153,7 @@ input, button, select, textarea {
   font-weight: 700;
 }
 
-/* Hero section at top of landing page */
+/* Hero section */
 .hero {
   background: linear-gradient(160deg, var(--purple-900), var(--purple-600));
   color: white;
@@ -163,14 +162,13 @@ input, button, select, textarea {
   position: relative;
 }
 
-/* Mode selection cards (main feature choice UI) */
+/* Mode selection cards */
 .mode-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: var(--space-6);
 }
 
-/* Individual mode card */
 .mode-card {
   background: white;
   border: 2px solid var(--color-border);
@@ -186,7 +184,7 @@ input, button, select, textarea {
   box-shadow: var(--shadow-lg);
 }
 
-/* Upload section for files */
+/* Upload section */
 .upload-panel {
   padding: var(--space-12) var(--space-6);
 }
@@ -199,7 +197,7 @@ input, button, select, textarea {
   border-radius: var(--radius-lg);
 }
 
-/* Buttons (primary / secondary / ghost) */
+/* Buttons */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -211,32 +209,30 @@ input, button, select, textarea {
   transition: all 150ms ease;
 }
 
-/* Primary CTA button */
 .btn--primary {
   background: linear-gradient(135deg, var(--purple-600), var(--purple-700));
   color: white;
 }
 
-/* Secondary button */
 .btn--secondary {
   background: var(--purple-100);
   color: var(--purple-700);
 }
 
-/* Results section (after upload processing) */
+/* Results section */
 .results {
   padding: var(--space-12) var(--space-6);
   background: white;
 }
 
-/* Tabs inside results section */
+/* Tabs inside results */
 .results-tabs {
   display: flex;
   gap: var(--space-2);
   border-bottom: 2px solid var(--color-border);
 }
 
-/* Footer at bottom of page */
+/* Footer */
 .footer {
   margin-top: auto;
   padding: var(--space-8);
@@ -244,7 +240,7 @@ input, button, select, textarea {
   border-top: 1px solid var(--color-border);
 }
 
-/* Responsive adjustments for mobile */
+/* Mobile responsiveness */
 @media (max-width: 480px) {
   .mode-cards {
     grid-template-columns: 1fr;
@@ -255,7 +251,7 @@ input, button, select, textarea {
   }
 }
 
-/* Accessibility: reduce motion support */
+/* Reduce motion for accessibility */
 @media (prefers-reduced-motion: reduce) {
   * {
     transition: none !important;
