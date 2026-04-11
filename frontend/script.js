@@ -1,21 +1,16 @@
 'use strict';
 
-/* ══════════════════════════════════════════════════════════════
-   ExamEdge — application logic
+/* ExamEdge — application logic
    Handles: mode selection, file upload, Gemini API calls,
-   plain-text parsing, result rendering, tab switching.
-   ══════════════════════════════════════════════════════════════ */
+   plain-text parsing, result rendering, tab switching. */
 
-// ─── API configuration ─────────────────────────────────────────────────────────
+//  API configuration 
 // Replace 'YOUR_KEY_HERE' with a real Gemini API key before running.
 
 const API_KEY = 'YOUR_KEY_HERE';
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
-// ─── Exact prompts ─────────────────────────────────────────────────────────────
-// Both prompts instruct Gemini to return plain text with exactly 3 labelled
-// sections. The [content] placeholder is swapped at call-time with the actual
-// file text (TXT) or left as "[see attached document]" (PDF / image).
+
 
 function buildPrompt(mode, content) {
   if (mode === 1) {
@@ -41,7 +36,7 @@ CRAM SHEET: A focused one-page study summary.
 Content: ${content}`;
 }
 
-// ─── DOM references ────────────────────────────────────────────────────────────
+// DOM references
 
 const modeCards    = document.querySelectorAll('.mode-card');
 const uploadPanels = {
@@ -71,12 +66,12 @@ const panelFullex    = document.getElementById('panel-fullex');     // Cram Shee
 const btnDownloadPdf = document.getElementById('btn-download-pdf');
 const btnStartOver   = document.getElementById('btn-start-over');
 
-// ─── Application state ─────────────────────────────────────────────────────────
+// Application state 
 
 let activeMode    = null;
 let selectedFiles = { 1: null, 2: null };
 
-// ─── Mode selection ────────────────────────────────────────────────────────────
+// Mode selection 
 // Clicking (or pressing Enter/Space on) a mode card shows the matching upload panel.
 
 modeCards.forEach(card => {
@@ -106,7 +101,7 @@ function selectMode(mode) {
   }
 }
 
-// ─── File handling — drag & drop + native picker ───────────────────────────────
+// File handling — drag & drop + native picker 
 // Supported types match what Gemini inline_data accepts for document analysis.
 
 const ACCEPTED_MIME  = ['application/pdf', 'image/png', 'image/jpeg', 'text/plain'];
@@ -188,7 +183,7 @@ function resetDropZone(mode) {
   if (fileInputs[mode]) fileInputs[mode].value = '';
 }
 
-// ─── Form submission ───────────────────────────────────────────────────────────
+// Form submission
 
 [1, 2].forEach(mode => {
   uploadForms[mode]?.addEventListener('submit', e => {
@@ -201,7 +196,7 @@ function resetDropZone(mode) {
   });
 });
 
-// ─── Loading spinner ───────────────────────────────────────────────────────────
+// Loading spinner 
 // A full-screen overlay injected while the Gemini request is in flight.
 
 function showSpinner(mode) {
@@ -228,7 +223,7 @@ function hideSpinner() {
   setTimeout(() => overlay.remove(), 400); // Fallback if transitionend doesn't fire
 }
 
-// ─── Main processing flow ──────────────────────────────────────────────────────
+// Main processing flow
 // Coordinates file reading → prompt building → Gemini call → rendering.
 
 async function startProcessing(mode) {
@@ -256,9 +251,9 @@ async function startProcessing(mode) {
   }
 }
 
-// ─── File preparation ──────────────────────────────────────────────────────────
-// text/plain  → read as text and inject directly into the prompt string
-// PDF / image → read as base64 and send as a Gemini inline_data part
+//  File preparation 
+// text/plain  -> read as text and inject directly into the prompt string
+// PDF / image -> read as base64 and send as a Gemini inline_data part
 
 async function prepareFile(file) {
   if (file.type === 'text/plain') {
@@ -284,7 +279,7 @@ async function prepareFile(file) {
   };
 }
 
-// ─── Gemini API call ───────────────────────────────────────────────────────────
+// Gemini API call 
 // Sends the prompt and optional file part to gemini-1.5-flash.
 // Returns the raw text string from the first response candidate.
 
@@ -298,7 +293,7 @@ async function callGemini(promptText, extraPart) {
     generationConfig: {
       temperature:     0.7,
       maxOutputTokens: 4096,
-      // No responseMimeType — we want plain text so the section headers parse reliably
+      // No responseMimeType - we want plain text so the section headers parse reliably
     },
   };
 
@@ -329,7 +324,7 @@ async function callGemini(promptText, extraPart) {
   return text;
 }
 
-// ─── Plain-text section parser ─────────────────────────────────────────────────
+// Plain-text section parser 
 // Splits the Gemini response on the 3 exact section headers we requested.
 // Works for both Mode 1 and Mode 2 (the prompts use identical header names).
 
@@ -363,7 +358,7 @@ function parseTextSections(text) {
   return sections;
 }
 
-// ─── Result rendering ──────────────────────────────────────────────────────────
+// Result rendering 
 // Populates all three panels, reveals the results card, and activates the first tab.
 // All 3 tabs are always shown — both prompts return the same 3 sections.
 
@@ -384,7 +379,7 @@ function renderResults(sections) {
   );
 }
 
-// ─── Section renderer ──────────────────────────────────────────────────────────
+// Section renderer
 // Converts a plain-text section body from Gemini into clean HTML.
 // Handles: numbered lists, bullet lists, sub-headings, paragraphs,
 // and inline **bold** / *italic* markdown.
@@ -455,7 +450,7 @@ function renderInline(text) {
     .replace(/\*(.+?)\*/g,     '<em>$1</em>');
 }
 
-// ─── Tab switching ─────────────────────────────────────────────────────────────
+// Tab switching
 
 tabButtons.forEach(btn => btn.addEventListener('click', () => activateTab(btn.id)));
 
@@ -470,7 +465,7 @@ function activateTab(tabId) {
   });
 }
 
-// ─── Start over ────────────────────────────────────────────────────────────────
+// Start over
 // Resets the entire UI back to the initial mode-selection state.
 
 btnStartOver?.addEventListener('click', () => {
@@ -499,7 +494,7 @@ btnStartOver?.addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-// ─── Inline error helpers ──────────────────────────────────────────────────────
+// Inline error helpers 
 
 function showUploadError(mode, message) {
   const form = uploadForms[mode];
@@ -517,7 +512,7 @@ function clearUploadError(mode) {
   uploadForms[mode]?.querySelector('.upload-error')?.remove();
 }
 
-// ─── XSS-safe HTML escaping ────────────────────────────────────────────────────
+// XSS-safe HTML escaping 
 // Applied to ALL AI-generated text before it is inserted into the DOM.
 
 function escapeHtml(str) {

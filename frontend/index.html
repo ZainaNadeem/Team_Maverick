@@ -5,51 +5,60 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ExamEdge — AI-Powered Exam Prep</title>
 
-  <!-- Fonts: Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
 
-  <!-- NAV: sticky top bar with branding -->
+  <!-- NAV -->
   <nav class="nav" aria-label="Site navigation">
     <div class="nav__inner">
       <a href="/" class="nav__logo" aria-label="ExamEdge home">
         <div class="nav__logo-mark" aria-hidden="true">E</div>
         <span class="nav__brand">Exam<span>Edge</span></span>
       </a>
-      <span class="nav__powered">Powered by Gemini AI</span>
+      <span class="nav__powered">&#10022; Powered by Gemini AI</span>
     </div>
   </nav>
 
   <main>
 
-    <!-- HERO: value proposition and intro -->
+    <!-- HERO -->
     <section class="hero" aria-labelledby="hero-heading">
+      <div class="hero__glow hero__glow--a" aria-hidden="true"></div>
+      <div class="hero__glow hero__glow--b" aria-hidden="true"></div>
+
       <div class="hero__inner">
 
-        <span class="hero__eyebrow">Hackathon Project — Gemini AI</span>
+        <span class="hero__eyebrow">Hackathon Project &middot; Gemini AI</span>
 
         <h1 class="hero__title" id="hero-heading">
-          Ace your exams<br />with <em>AI-powered</em> prep
+          Ace your exams<br>with <em>AI-powered</em> prep
         </h1>
 
         <p class="hero__subtitle">
           Upload your past exam or study notes and ExamEdge instantly generates
-          personalised top concepts, practice questions, and a focused cram sheet
-          — powered by Gemini AI.
+          personalised top concepts, practice questions, and a focused cram sheet.
         </p>
 
         <ol class="hero__steps" aria-label="How it works">
-          <li class="hero__step"><span class="hero__step-num">1</span> Choose a mode</li>
-          <li class="hero__step-arrow">→</li>
-          <li class="hero__step"><span class="hero__step-num">2</span> Upload your file</li>
-          <li class="hero__step-arrow">→</li>
-          <li class="hero__step"><span class="hero__step-num">3</span> Get your study pack</li>
+          <li class="hero__step">
+            <span class="hero__step-num" aria-hidden="true">1</span>
+            Choose a mode
+          </li>
+          <li class="hero__step-sep" aria-hidden="true"></li>
+          <li class="hero__step">
+            <span class="hero__step-num" aria-hidden="true">2</span>
+            Upload your file
+          </li>
+          <li class="hero__step-sep" aria-hidden="true"></li>
+          <li class="hero__step">
+            <span class="hero__step-num" aria-hidden="true">3</span>
+            Get your study pack
+          </li>
         </ol>
 
       </div>
@@ -59,134 +68,272 @@
     <section class="mode-selection" aria-labelledby="mode-heading">
       <div class="section-inner">
 
-        <h2 id="mode-heading">Choose your mode</h2>
-        <p>Pick how you want to use ExamEdge today.</p>
+        <div class="mode-selection__header">
+          <h2 class="mode-selection__title" id="mode-heading">Choose your mode</h2>
+          <p class="mode-selection__sub">How do you want to use ExamEdge today?</p>
+        </div>
 
         <div class="mode-cards">
 
-          <!-- Mode 1 -->
-          <div class="mode-card" data-mode="1" role="button" tabindex="0">
-            <div class="mode-card__icon" aria-hidden="true">🔍</div>
+          <!-- Mode 1: Analyse past exam -->
+          <div class="mode-card" data-mode="1" role="button" tabindex="0"
+               aria-label="Mode 1: Analyse a past exam">
+            <div class="mode-card__icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"/>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              </svg>
+            </div>
             <span class="mode-card__tag">Analyse</span>
-            <h3>Past Exam Analysis</h3>
-            <p>Upload a past exam and get key concepts, practice questions, and a cram sheet.</p>
-            <span class="mode-card__cta">Select →</span>
+            <h3 class="mode-card__title">Past Exam Analysis</h3>
+            <p class="mode-card__desc">
+              Upload a previous exam paper. ExamEdge identifies top tested concepts,
+              generates new questions in the same style, and writes a focused cram sheet.
+            </p>
+            <span class="mode-card__cta" aria-hidden="true">Select &rarr;</span>
           </div>
 
-          <!-- Mode 2 -->
-          <div class="mode-card" data-mode="2" role="button" tabindex="0">
-            <div class="mode-card__icon" aria-hidden="true">📄</div>
-            <span class="mode-card__tag">Generate</span>
-            <h3>Notes → Practice Exam</h3>
-            <p>Turn notes into exam-style questions and a structured revision sheet.</p>
-            <span class="mode-card__cta">Select →</span>
+          <!-- Mode 2: Generate from notes -->
+          <div class="mode-card" data-mode="2" role="button" tabindex="0"
+               aria-label="Mode 2: Generate practice exam from notes">
+            <div class="mode-card__icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/>
+                <line x1="16" y1="17" x2="8" y2="17"/>
+              </svg>
+            </div>
+            <span class="mode-card__tag mode-card__tag--gen">Generate</span>
+            <h3 class="mode-card__title">Notes &rarr; Practice Exam</h3>
+            <p class="mode-card__desc">
+              Upload lecture notes or a syllabus. ExamEdge generates 10 exam-style
+              questions on the most important topics plus a complete cram sheet.
+            </p>
+            <span class="mode-card__cta" aria-hidden="true">Select &rarr;</span>
           </div>
 
         </div>
       </div>
     </section>
 
-    <!-- UPLOAD PANEL MODE 1 -->
-    <section class="upload-panel upload-panel--mode1" id="upload-panel-mode1" hidden>
+    <!-- UPLOAD PANEL — MODE 1 -->
+    <section class="upload-panel upload-panel--1" id="upload-panel-mode1"
+             aria-labelledby="upload-heading-1" hidden>
       <div class="section-inner">
 
         <div class="upload-panel__header">
-          <div class="upload-panel__badge">Mode 1 — Analyse Past Exam</div>
-          <h2>Upload your past exam</h2>
-          <p>Upload PDF, images, or text files for AI analysis.</p>
+          <span class="upload-panel__badge upload-panel__badge--1">Mode 1 &middot; Analyse</span>
+          <h2 class="upload-panel__title" id="upload-heading-1">Upload your past exam</h2>
+          <p class="upload-panel__desc">
+            Supports PDF, PNG/JPG scans, or plain-text files.
+            Gemini reads the content and generates your study pack.
+          </p>
         </div>
 
-        <form class="upload-form" id="upload-form-mode1">
+        <form class="upload-form" id="upload-form-mode1" novalidate>
 
-          <div class="drop-zone">
-            <p>Drag & drop or <label for="file-input-mode1">browse</label></p>
-            <input type="file" id="file-input-mode1" accept=".pdf,.png,.jpg,.jpeg,.txt" />
+          <div class="drop-zone" id="drop-zone-mode1">
+            <div class="drop-zone__icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="17 8 12 3 7 8"/>
+                <line x1="12" y1="3" x2="12" y2="15"/>
+              </svg>
+            </div>
+            <p class="drop-zone__prompt">
+              Drag &amp; drop your exam file here, or
+              <label for="file-input-mode1" class="drop-zone__browse">browse</label>
+            </p>
+            <p class="drop-zone__hint">PDF, PNG, JPG, TXT &mdash; max 20 MB</p>
+            <input type="file" id="file-input-mode1" name="exam-file"
+              accept=".pdf,.png,.jpg,.jpeg,.txt" class="drop-zone__input"
+              aria-label="Upload past exam file" />
           </div>
 
-          <input type="text" placeholder="Subject (optional)" />
+          <div class="form-group">
+            <label class="form-label" for="context-mode1">
+              Subject / module
+              <span class="form-optional">(optional &mdash; helps AI focus)</span>
+            </label>
+            <input type="text" id="context-mode1" name="context" class="form-input"
+              placeholder="e.g. CS203 &mdash; Algorithms" autocomplete="off" />
+          </div>
 
-          <button type="submit">Analyse with Gemini</button>
+          <button type="submit" class="btn btn--primary btn--full">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" stroke-width="2.2"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            Analyse exam with Gemini
+          </button>
+
         </form>
-
       </div>
     </section>
 
-    <!-- UPLOAD PANEL MODE 2 -->
-    <section class="upload-panel upload-panel--mode2" id="upload-panel-mode2" hidden>
+    <!-- UPLOAD PANEL — MODE 2 -->
+    <section class="upload-panel upload-panel--2" id="upload-panel-mode2"
+             aria-labelledby="upload-heading-2" hidden>
       <div class="section-inner">
 
         <div class="upload-panel__header">
-          <div class="upload-panel__badge">Mode 2 — Generate from Notes</div>
-          <h2>Upload your notes</h2>
-          <p>Generate a practice exam from lecture notes or syllabus.</p>
+          <span class="upload-panel__badge upload-panel__badge--2">Mode 2 &middot; Generate</span>
+          <h2 class="upload-panel__title" id="upload-heading-2">Upload your notes</h2>
+          <p class="upload-panel__desc">
+            Upload lecture notes, a reading list, or a module syllabus.
+            Gemini generates a realistic practice exam tailored to the content.
+          </p>
         </div>
 
-        <form class="upload-form" id="upload-form-mode2">
+        <form class="upload-form" id="upload-form-mode2" novalidate>
 
-          <div class="drop-zone">
-            <p>Drag & drop or <label for="file-input-mode2">browse</label></p>
-            <input type="file" id="file-input-mode2" accept=".pdf,.png,.jpg,.jpeg,.txt" />
+          <div class="drop-zone" id="drop-zone-mode2">
+            <div class="drop-zone__icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="17 8 12 3 7 8"/>
+                <line x1="12" y1="3" x2="12" y2="15"/>
+              </svg>
+            </div>
+            <p class="drop-zone__prompt">
+              Drag &amp; drop your notes here, or
+              <label for="file-input-mode2" class="drop-zone__browse">browse</label>
+            </p>
+            <p class="drop-zone__hint">PDF, PNG, JPG, TXT &mdash; max 20 MB</p>
+            <input type="file" id="file-input-mode2" name="notes-file"
+              accept=".pdf,.png,.jpg,.jpeg,.txt" class="drop-zone__input"
+              aria-label="Upload notes or syllabus file" />
           </div>
 
-          <select>
-            <option>Exam format (optional)</option>
-            <option>MCQ</option>
-            <option>Short Answer</option>
-            <option>Essay</option>
-          </select>
+          <div class="form-group">
+            <label class="form-label" for="exam-type-mode2">Preferred exam format</label>
+            <select id="exam-type-mode2" name="exam-type" class="form-select">
+              <option value="">&mdash; Select format (optional) &mdash;</option>
+              <option value="mcq">Multiple choice</option>
+              <option value="short">Short answer</option>
+              <option value="essay">Essay / long answer</option>
+              <option value="mixed">Mixed</option>
+            </select>
+          </div>
 
-          <input type="text" placeholder="Subject (optional)" />
+          <div class="form-group">
+            <label class="form-label" for="context-mode2">
+              Subject / module
+              <span class="form-optional">(optional)</span>
+            </label>
+            <input type="text" id="context-mode2" name="context" class="form-input"
+              placeholder="e.g. BIO201 &mdash; Cell Biology" autocomplete="off" />
+          </div>
 
-          <button type="submit">Generate with Gemini</button>
+          <button type="submit" class="btn btn--generate btn--full">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" stroke-width="2.2"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+            </svg>
+            Generate exam with Gemini
+          </button>
+
         </form>
-
       </div>
     </section>
 
-    <!-- RESULTS SECTION -->
-    <section class="results" id="results" hidden>
+    <!-- RESULTS -->
+    <section class="results" id="results" aria-labelledby="results-heading" hidden>
       <div class="section-inner">
 
         <div class="results-header">
-          <div>
-            <h2>Your Study Pack</h2>
-            <p>Generated by Gemini AI</p>
+          <div class="results-header__title">
+            <span class="results-badge">&#10022; AI Generated</span>
+            <h2 class="results-heading" id="results-heading">Your Study Pack</h2>
+            <p class="results-header__note">
+              Generated by Gemini AI &mdash; review before using in exams.
+            </p>
           </div>
-
-          <div>
-            <button id="btn-download-pdf" disabled>Download PDF</button>
-            <button id="btn-start-over">Start over</button>
+          <div class="results-header__actions">
+            <button class="btn btn--download" id="btn-download-pdf" disabled>
+              <svg width="14" height="14" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              Download PDF
+            </button>
+            <button class="btn btn--ghost btn--sm" id="btn-start-over">
+              &larr; Start over
+            </button>
           </div>
         </div>
 
-        <!-- Tabs -->
-        <div class="results-tabs">
+        <!-- Tab bar -->
+        <div class="results-tabs" role="tablist" aria-label="Study pack sections">
 
-          <button class="results-tab results-tab--active" id="tab-cram">
+          <button class="results-tab results-tab--active" role="tab"
+            id="tab-cramsheet" aria-controls="panel-cramsheet" aria-selected="true">
+            <svg class="results-tab__icon" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" aria-hidden="true">
+              <path d="M9 11l3 3L22 4"/>
+              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+            </svg>
             Top Concepts
           </button>
 
-          <button class="results-tab" id="tab-questions">
+          <button class="results-tab" role="tab"
+            id="tab-questions" aria-controls="panel-questions" aria-selected="false">
+            <svg class="results-tab__icon" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
             Practice Questions
           </button>
 
-          <button class="results-tab" id="tab-sheet">
+          <button class="results-tab" role="tab"
+            id="tab-fullex" aria-controls="panel-fullex" aria-selected="false" hidden>
+            <svg class="results-tab__icon" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" aria-hidden="true">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+            </svg>
             Cram Sheet
           </button>
 
         </div>
 
         <!-- Panels -->
-        <div class="results-panel" id="panel-cram">
-          <p>Top concepts will appear here.</p>
+        <div class="results-panel" id="panel-cramsheet"
+             role="tabpanel" aria-labelledby="tab-cramsheet">
+          <p class="results-placeholder">Top concepts will appear here.</p>
         </div>
 
-        <div class="results-panel" id="panel-questions" hidden>
-          <p>Practice questions will appear here.</p>
+        <div class="results-panel" id="panel-questions"
+             role="tabpanel" aria-labelledby="tab-questions" hidden>
+          <p class="results-placeholder">Practice questions will appear here.</p>
         </div>
 
-        <div class="results-panel" id="panel-sheet" hidden>
-          <p>Cram sheet will appear here.</p>
+        <div class="results-panel" id="panel-fullex"
+             role="tabpanel" aria-labelledby="tab-fullex" hidden>
+          <p class="results-placeholder">Your cram sheet will appear here.</p>
         </div>
 
       </div>
@@ -197,12 +344,11 @@
   <!-- FOOTER -->
   <footer class="footer">
     <div class="footer__inner">
-      <p>ExamEdge</p>
-      <p>Built for hackathon — Gemini AI</p>
+      <p class="footer__brand">ExamEdge</p>
+      <p class="footer__note">Built for the hackathon &middot; Powered by Gemini AI</p>
     </div>
   </footer>
 
   <script src="script.js"></script>
-
 </body>
 </html>
