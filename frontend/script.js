@@ -13,26 +13,48 @@ const BACKEND_URL = 'http://localhost:8000';
 
 function buildPrompt(mode, content) {
   if (mode === 1) {
-    return `You are an expert academic tutor. Analyze this exam and return exactly 3 sections:
+    return `You are an expert academic tutor. Analyze this exam and return EXACTLY 3 sections.
 
-TOP CONCEPTS: List the 5 most tested concepts.
+Use EXACTLY these three headers on their own lines — plain text only, no markdown, no bold (**), no # symbols, no extra punctuation:
 
-PRACTICE QUESTIONS: Generate 5 new questions in the same style and difficulty.
+TOP CONCEPTS:
+List the 5 most important concepts tested in this exam. For each concept write a short explanation.
 
-CRAM SHEET: Write a focused one-page study summary.
+PRACTICE QUESTIONS:
+Write 5 new practice questions in the same style and difficulty as the exam.
 
-Exam content: ${content}`;
+CRAM SHEET:
+Write a focused one-page study summary of the key material.
+
+Important rules:
+- Start your response immediately with "TOP CONCEPTS:" — no preamble.
+- Do NOT use LaTeX or math symbols ($, \\sum, \\frac, etc.). Write math in plain English.
+- Do NOT bold the headers or wrap them in ** or ##.
+
+Exam content:
+${content}`;
   }
 
-  return `You are an expert academic tutor. Based on this syllabus/notes, create a realistic practice exam with exactly 3 sections:
+  return `You are an expert academic tutor. Based on the notes/syllabus below, create a study pack with EXACTLY 3 sections.
 
-TOP CONCEPTS: The 5 most important topics likely to be tested.
+Use EXACTLY these three headers on their own lines — plain text only, no markdown, no bold (**), no # symbols, no extra punctuation:
 
-PRACTICE QUESTIONS: 10 exam-style questions covering these topics.
+TOP CONCEPTS:
+The 5 most important topics likely to be tested. For each topic write a short explanation.
 
-CRAM SHEET: A focused one-page study summary.
+PRACTICE QUESTIONS:
+10 exam-style questions covering these topics.
 
-Content: ${content}`;
+CRAM SHEET:
+A focused one-page study summary of the key material.
+
+Important rules:
+- Start your response immediately with "TOP CONCEPTS:" — no preamble.
+- Do NOT use LaTeX or math symbols ($, \\sum, \\frac, etc.). Write math in plain English.
+- Do NOT bold the headers or wrap them in ** or ##.
+
+Content:
+${content}`;
 }
 
 // DOM references
@@ -318,29 +340,36 @@ async function callGemini(promptText, extraPart) {
 // Splits the Gemini response on the 3 exact section headers we requested.
 // Works for both Mode 1 and Mode 2 (the prompts use identical header names).
 
+// Finds a section header in the text regardless of markdown wrapping Gemini may add.
+// Returns the index where the header starts and the index where the content begins.
+function findSection(text, label) {
+  const escaped = label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  // Handles: ##LABEL, **LABEL**, **LABEL:**, LABEL:, LABEL (case-insensitive)
+  const re = new RegExp(`(?:#{1,3}\\s*)?(?:\\*{1,2})?${escaped}(?:\\*{1,2})?:?`, 'i');
+  const m  = re.exec(text);
+  return m ? { idx: m.index, end: m.index + m[0].length } : { idx: -1, end: -1 };
+}
+
 function parseTextSections(text) {
-  // Map each section to the marker label and its position in the response text
   const markers = [
-    { key: 'topConcepts',       label: 'TOP CONCEPTS:'       },
-    { key: 'practiceQuestions', label: 'PRACTICE QUESTIONS:' },
-    { key: 'cramSheet',         label: 'CRAM SHEET:'         },
+    { key: 'topConcepts',       label: 'TOP CONCEPTS'       },
+    { key: 'practiceQuestions', label: 'PRACTICE QUESTIONS' },
+    { key: 'cramSheet',         label: 'CRAM SHEET'         },
   ];
 
-  const positions = markers.map(m => ({ ...m, idx: text.indexOf(m.label) }));
+  const positions = markers.map(m => ({ ...m, ...findSection(text, m.label) }));
 
   const sections = {};
   positions.forEach((m, i) => {
     if (m.idx === -1) { sections[m.key] = ''; return; }
 
-    const start = m.idx + m.label.length;
-    // End of this section = start of the next found section (or end of string)
+    const start = m.end;
     const next  = positions.slice(i + 1).find(n => n.idx !== -1);
     const end   = next ? next.idx : text.length;
 
     sections[m.key] = text.slice(start, end).trim();
   });
 
-  // If none of the headers were found the response is unusable
   if (!sections.topConcepts && !sections.practiceQuestions && !sections.cramSheet) {
     throw new Error('Could not parse the AI response — expected section headers not found. Please try again.');
   }
@@ -376,6 +405,11 @@ function renderResults(sections) {
 
 function renderSection(text) {
   if (!text) return '<p class="results-placeholder">No content returned for this section.</p>';
+
+  // Strip LaTeX math notation — replace $$...$$ and $...$ with their plain text content
+  text = text
+    .replace(/\$\$([\s\S]*?)\$\$/g, (_, inner) => inner.trim())
+    .replace(/\$([^$\n]+?)\$/g,     (_, inner) => inner.trim());
 
   const lines  = text.split('\n');
   const chunks = [];
